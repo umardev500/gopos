@@ -48,7 +48,7 @@ func (p PaginationParams) Parse() *PaginationParams {
 // Time is a extension struct for created_at, updated_at, deleted_at
 type Time struct {
 	CreatedAt time.Time       `json:"created_at"`
-	UpdateAt  *time.Time      `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time      `json:"updated_at,omitempty"`
 	DeletedAt *gorm.DeletedAt `json:"deleted_at,omitempty"`
 }
 
