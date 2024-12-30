@@ -2,13 +2,16 @@ package database
 
 import (
 	"context"
+	stdLog "log"
 	"os"
 	"sync"
+	"time"
 
 	"github.com/rs/zerolog/log"
 	"gitub.com/umardev500/gopos/pkg/constant"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type GormInstance struct {
@@ -28,7 +31,20 @@ func GetGormInstance() *GormInstance {
 		pass := os.Getenv("DB_PASS")
 		name := os.Getenv("DB_NAME")
 		dsn := "host=" + host + " port=" + port + " user=" + user + " password=" + pass + " dbname=" + name + " sslmode=disable"
-		db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+		newLogger := logger.New(
+			stdLog.New(os.Stdout, "\r\n", stdLog.LstdFlags), // io writer
+			logger.Config{
+				SlowThreshold:             time.Second, // Slow SQL threshold
+				LogLevel:                  logger.Info, // Log level
+				IgnoreRecordNotFoundError: true,        // Ignore ErrRecordNotFound error for logger
+				ParameterizedQueries:      true,        // Don't include params in the SQL log
+				Colorful:                  true,        // Disable color
+			},
+		)
+
+		db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+			Logger: newLogger,
+		})
 		if err != nil {
 			log.Fatal().Err(err).Msg("Failed to connect to database")
 		}
