@@ -9,14 +9,22 @@ import (
 	"gitub.com/umardev500/gopos/pkg/model"
 )
 
+type PaginationMeta struct {
+	Page      int64 `json:"page"`
+	PageSize  int64 `json:"page_size"`
+	Total     int64 `json:"total"`
+	TotalPage int64 `json:"total_page"`
+}
+
 type Response struct {
-	StatusCode int         `json:"-"`
-	Success    bool        `json:"success"`
-	Message    string      `json:"message"`
-	Data       interface{} `json:"data,omitempty"`
-	Code       string      `json:"code,omitempty"`
-	Errors     interface{} `json:"errors,omitempty"`
-	Reference  string      `json:"reference,omitempty"`
+	StatusCode int             `json:"-"`
+	Success    bool            `json:"success"`
+	Message    string          `json:"message"`
+	Data       interface{}     `json:"data,omitempty"`
+	Pagination *PaginationMeta `json:"pagination,omitempty"`
+	Code       string          `json:"code,omitempty"`
+	Errors     interface{}     `json:"errors,omitempty"`
+	Reference  string          `json:"reference,omitempty"`
 }
 
 // ValidationResponse returns a common validation error response
