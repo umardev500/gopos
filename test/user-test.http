@@ -1,0 +1,2 @@
+### Get all users
+GET {{api}}/users?page=1&limit=10
