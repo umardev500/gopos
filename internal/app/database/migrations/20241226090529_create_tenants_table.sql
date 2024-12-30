@@ -17,6 +17,10 @@ CREATE TABLE IF NOT EXISTS tenants (
     FOREIGN KEY (modified_by) REFERENCES users (id) ON DELETE SET NULL
 );
 
+-- Seed data
+INSERT INTO tenants (id, name, username, email, phone_number) VALUES
+    ('00000000-0000-0000-0000-000000000001', 'Acme Company', 'acmeusername', 'acme@email.com', '+6283142765573');
+
 -- Archived tenants
 CREATE TABLE IF NOT EXISTS archived_tenants (
     id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
