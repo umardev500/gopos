@@ -34,7 +34,8 @@ type PaginationParams struct {
 // Parse pagination params to default if invalid
 func (p PaginationParams) Parse() *PaginationParams {
 	result := PaginationParams{
-		Page: p.Page,
+		Page:  p.Page,
+		Limit: p.Limit,
 	}
 
 	if p.Limit <= 0 {
