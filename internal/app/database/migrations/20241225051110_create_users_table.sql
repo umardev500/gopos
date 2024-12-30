@@ -1,0 +1,32 @@
+-- +goose Up
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
+    username VARCHAR(25) UNIQUE NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(60) NOT NULL,
+    version INT NOT NULL DEFAULT 1,
+
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ NULL DEFAULT NULL,
+    deleted_at TIMESTAMPTZ NULL DEFAULT NULL
+);
+
+-- Table to track changes on users
+CREATE TABLE IF NOT EXISTS archived_users (
+    id UUID PRIMARY KEY NOT NULL,
+    username VARCHAR(25) UNIQUE NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(60) NOT NULL,
+    version INT NOT NULL DEFAULT 1,
+
+    archived_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMPTZ NULL DEFAULT NULL,
+    updated_at TIMESTAMPTZ NULL DEFAULT NULL,
+    deleted_at TIMESTAMPTZ NULL DEFAULT NULL,
+
+    FOREIGN KEY (id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+-- +goose Down
+DROP TABLE IF EXISTS archived_users;
+DROP TABLE IF EXISTS users;
