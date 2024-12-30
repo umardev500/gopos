@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/gofiber/fiber/v2"
 	"gitub.com/umardev500/gopos/internal/app/contract"
+	"gitub.com/umardev500/gopos/internal/app/models"
 	pkgModel "gitub.com/umardev500/gopos/pkg/model"
 	pkgUtil "gitub.com/umardev500/gopos/pkg/util"
 )
@@ -26,7 +27,11 @@ func (u *userHandler) GetAllUsers(c *fiber.Ctx) error {
 	ctx, cancel := pkgUtil.BaseContext()
 	defer cancel()
 
-	res := u.userService.GetAllUsers(ctx, paginationParams)
+	params := models.FindUsersParams{
+		Pagination: *paginationParams.Parse(),
+	}
+
+	res := u.userService.GetAllUsers(ctx, &params)
 	if res == nil {
 		return c.JSON(res)
 	}

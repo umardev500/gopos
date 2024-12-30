@@ -35,7 +35,7 @@ func (r *userRepository) DeleteUsers(ctx context.Context, ids []string) error {
 	return conn.Delete(&models.User{}, "id IN (?)", ids).Error
 }
 
-func (r *userRepository) GetAllUsers(ctx context.Context, paginationParams *pkgModel.PaginationParams) (*pkgModel.PaginatedResult, error) {
+func (r *userRepository) GetAllUsers(ctx context.Context, params *models.FindUsersParams) (*pkgModel.PaginatedResult, error) {
 	conn := r.db.GetConn(ctx)
 	query := conn.Model(&models.User{})
 	var totalCount int64
@@ -44,8 +44,9 @@ func (r *userRepository) GetAllUsers(ctx context.Context, paginationParams *pkgM
 		return nil, err
 	}
 
-	pageSize := paginationParams.Limit
-	offset := (paginationParams.Page - 1) * pageSize
+	pagination := params.Pagination
+	pageSize := pagination.Limit
+	offset := (pagination.Page - 1) * pageSize
 
 	var users []*models.User
 	if err := query.Limit(pageSize).Offset(offset).Find(&users).Error; err != nil {

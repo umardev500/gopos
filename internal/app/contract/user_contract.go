@@ -16,7 +16,7 @@ type UserHandler interface {
 
 type UserService interface {
 	// Get all users
-	GetAllUsers(ctx context.Context, paginationParams *pkgModel.PaginationParams) *pkgUtil.Response
+	GetAllUsers(ctx context.Context, params *models.FindUsersParams) *pkgUtil.Response
 }
 
 type UserRepository interface {
@@ -30,7 +30,7 @@ type UserRepository interface {
 	DeleteUsers(ctx context.Context, ids []string) error
 
 	// Get all users
-	GetAllUsers(ctx context.Context, paginationParams *pkgModel.PaginationParams) (*pkgModel.PaginatedResult, error)
+	GetAllUsers(ctx context.Context, params *models.FindUsersParams) (*pkgModel.PaginatedResult, error)
 
 	// Get user by id
 	GetUserById(ctx context.Context, id string) (*models.User, error)

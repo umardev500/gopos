@@ -20,3 +20,8 @@ type CreateUserRequest struct{}
 type UpdateUserRequest struct {
 	ID string `json:"-"`
 }
+
+type FindUsersParams struct {
+	TenantID   *string
+	Pagination pkgModel.PaginationParams
+}
