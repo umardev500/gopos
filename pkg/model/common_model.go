@@ -32,17 +32,14 @@ type PaginationParams struct {
 }
 
 // Parse pagination params to default if invalid
-func (p PaginationParams) Parse() PaginationParams {
+func (p PaginationParams) Parse() *PaginationParams {
 	result := PaginationParams{}
 
-	if p.Page <= 0 {
-		result.Page = 1
-	}
 	if p.Limit <= 0 {
 		result.Limit = 10
 	}
 
-	return result
+	return &result
 }
 
 // Time is a extension struct for created_at, updated_at, deleted_at
