@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS branch_product_inventory (
     is_active BOOLEAN NOT NULL DEFAULT TRUE, -- Product/unit availability in branch
     version INT NOT NULL DEFAULT 1,
 
-    user_id UUID NOT NULL, -- User who made the change
+    modified_by UUID NOT NULL, -- User who made the change
 
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ NULL DEFAULT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS branch_product_inventory (
     FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE,
     FOREIGN KEY (unit_id) REFERENCES units (id) ON DELETE CASCADE,
     FOREIGN KEY (variant_id) REFERENCES product_variants (id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL
+    FOREIGN KEY (modified_by) REFERENCES users (id) ON DELETE SET NULL
 );
 
 -- Table to track changes on branch product inventory
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS archived_branch_product_inventory (
     is_active BOOLEAN NOT NULL DEFAULT TRUE, -- Product/unit availability in branch
     version INT NOT NULL DEFAULT 1,
 
-    user_id UUID NOT NULL, -- User who made the change
+    modified_by UUID NOT NULL, -- User who made the change
 
     archived_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMPTZ NULL DEFAULT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS archived_branch_product_inventory (
     FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE,
     FOREIGN KEY (unit_id) REFERENCES units (id) ON DELETE CASCADE,
     FOREIGN KEY (variant_id) REFERENCES product_variants (id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL
+    FOREIGN KEY (modified_by) REFERENCES users (id) ON DELETE SET NULL
 );
 
 -- +goose Down
