@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS product_units (
     base_price DECIMAL(10, 2) NOT NULL, -- Base price for the unit (tenant-wide default)
     version INT NOT NULL DEFAULT 1,
 
-    modified_by UUID NOT NULL, -- User who made the change
+    modified_by UUID NULL, -- User who made the change
 
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ NULL DEFAULT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS archived_product_units (
     base_price DECIMAL(10, 2) NOT NULL, -- Base price for the unit (tenant-wide default)
     version INT NOT NULL DEFAULT 1,
 
-    modified_by UUID NOT NULL, -- User who made the change
+    modified_by UUID NULL, -- User who made the change
 
     archived_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMPTZ NULL DEFAULT NULL,

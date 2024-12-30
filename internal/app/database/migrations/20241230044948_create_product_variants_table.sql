@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS product_variants (
     description TEXT,
     version INT NOT NULL,
 
-    modified_by UUID NOT NULL, -- User who made the change
+    modified_by UUID NULL, -- User who made the change
     
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ NULL DEFAULT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS archived_product_variants (
     description TEXT,
     version INT NOT NULL,
 
-    modified_by UUID NOT NULL, -- User who made the change
+    modified_by UUID NULL, -- User who made the change
     
     archived_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMPTZ NULL DEFAULT NULL,

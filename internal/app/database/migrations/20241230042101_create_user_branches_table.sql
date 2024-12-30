@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS user_branches (
     branch_id UUID NOT NULL,
     version INT NOT NULL,
 
-    modified_by VARCHAR(50) NOT NULL, -- User who made the change
+    modified_by UUID NULL, -- User who made the change
 
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ NULL DEFAULT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS archived_user_branches (
     branch_id UUID NOT NULL,
     version INT NOT NULL,
 
-    modified_by VARCHAR(50) NOT NULL, -- User who made the change
+    modified_by UUID NULL, -- User who made the change
 
     archived_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMPTZ NULL DEFAULT NULL,
@@ -36,4 +36,5 @@ CREATE TABLE IF NOT EXISTS archived_user_branches (
 );
 
 -- +goose Down
+DROP TABLE IF EXISTS archived_user_branches;
 DROP TABLE IF EXISTS user_branches;
