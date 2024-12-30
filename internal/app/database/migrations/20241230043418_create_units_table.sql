@@ -1,7 +1,7 @@
 -- +goose Up
 CREATE TABLE IF NOT EXISTS units (
     id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
-    tenant_id UUID NOT NULL,
+    tenant_id UUID NULL, -- Nullable allowing for shared units
     name VARCHAR(50) NOT NULL,
     description TEXT,
     version INT NOT NULL DEFAULT 1,
@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS units (
 
 -- Table to track changes on product units
 CREATE TABLE IF NOT EXISTS archived_units (
-    id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
-    tenant_id UUID NOT NULL,
+    id UUID PRIMARY KEY NOT NULL,
+    tenant_id UUID NULL, -- Nullable allowing for shared units
     name VARCHAR(50) NOT NULL,
     description TEXT,
     version INT NOT NULL DEFAULT 1,
