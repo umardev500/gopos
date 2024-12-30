@@ -8,10 +8,14 @@ CREATE TABLE IF NOT EXISTS plans (
     metadata JSONB NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     version INT NOT NULL DEFAULT 1,
+
+    modified_by UUID NULL, -- User who made the change
     
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ NULL DEFAULT NULL,
-    deleted_at TIMESTAMPTZ NULL DEFAULT NULL
+    deleted_at TIMESTAMPTZ NULL DEFAULT NULL,
+
+    FOREIGN KEY (modified_by) REFERENCES users (id) ON DELETE SET NULL
 );
 
 
@@ -27,12 +31,15 @@ CREATE TABLE IF NOT EXISTS archived_plans (
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     version INT NOT NULL DEFAULT 1,
 
+    modified_by UUID NULL, -- User who made the change
+
     archived_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMPTZ NULL DEFAULT NULL,
     updated_at TIMESTAMPTZ NULL DEFAULT NULL,
     deleted_at TIMESTAMPTZ NULL DEFAULT NULL,
 
-    FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE SET NULL
+    FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE SET NULL,
+    FOREIGN KEY (modified_by) REFERENCES users (id) ON DELETE SET NULL
 );
 
 -- +goose Down
