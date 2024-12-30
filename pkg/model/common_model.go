@@ -21,6 +21,30 @@ func (i IdsRequest) StringSlice() []string {
 	return ids
 }
 
+type PaginatedResult struct {
+	Data  interface{} `json:"data"`
+	Total int         `json:"total"`
+}
+
+type PaginationParams struct {
+	Page  int `json:"page"`
+	Limit int `json:"limit"`
+}
+
+// Parse pagination params to default if invalid
+func (p PaginationParams) Parse() PaginationParams {
+	result := PaginationParams{}
+
+	if p.Page <= 0 {
+		result.Page = 1
+	}
+	if p.Limit <= 0 {
+		result.Limit = 10
+	}
+
+	return result
+}
+
 // Time is a extension struct for created_at, updated_at, deleted_at
 type Time struct {
 	CreatedAt time.Time       `json:"created_at"`
