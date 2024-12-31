@@ -112,8 +112,7 @@ func (s *userService) GetAllUsers(ctx context.Context, params *models.FindUsersP
 	// Get all users
 	paginatedResult, err := s.repo.GetAllUsers(ctx, params)
 	if err != nil {
-		// TODO: Handle error
-		return &pkgUtil.Response{}
+		return pkgUtil.DBErrorResponse(err)
 	}
 
 	// Assign pagination meta

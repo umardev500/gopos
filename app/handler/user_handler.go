@@ -24,7 +24,8 @@ func NewUserHandler(userService contract.UserService) contract.UserHandler {
 func (u *userHandler) CreateUser(c *fiber.Ctx) error {
 	var payload models.CreateUserRequest
 	if err := c.BodyParser(&payload); err != nil {
-		return err
+		res := pkgUtil.BadRequestResponse(err)
+		return c.Status(res.StatusCode).JSON(res)
 	}
 
 	ctx := pkgUtil.NewContext().WithTimeout(5).WithClaims(c)
