@@ -7,7 +7,7 @@ import (
 	"gitub.com/umardev500/gopos/pkg/constant"
 )
 
-func GenerateJWT(claims jwt.Claims) (string, error) {
+func GenerateJWT(claims jwt.MapClaims) (string, error) {
 	secret := os.Getenv("JWT_SECRET")
 
 	// Create the token
