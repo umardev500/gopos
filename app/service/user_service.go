@@ -11,6 +11,7 @@ import (
 	"gitub.com/umardev500/gopos/internal/app/models"
 	"gitub.com/umardev500/gopos/pkg/constant"
 	"gitub.com/umardev500/gopos/pkg/database"
+	"gitub.com/umardev500/gopos/pkg/logger"
 	pkgUtil "gitub.com/umardev500/gopos/pkg/util"
 	"gitub.com/umardev500/gopos/pkg/validator"
 )
@@ -18,6 +19,7 @@ import (
 type userService struct {
 	repo           contract.UserRepository
 	userTenantRepo contract.UserTenantRepository
+	userRoleRepo   contract.UserRoleRepository
 	db             *database.GormInstance
 	validate       validator.Validator
 }
@@ -25,12 +27,14 @@ type userService struct {
 func NewUserService(
 	repo contract.UserRepository,
 	userTenantRepo contract.UserTenantRepository,
+	userRoleRepo contract.UserRoleRepository,
 	db *database.GormInstance,
 	v validator.Validator,
 ) contract.UserService {
 	return &userService{
 		repo:           repo,
 		userTenantRepo: userTenantRepo,
+		userRoleRepo:   userRoleRepo,
 		db:             db,
 		validate:       v,
 	}
@@ -61,9 +65,24 @@ func (s *userService) CreateUser(ctx context.Context, user *models.CreateUserReq
 			return err
 		}
 
-		// TODO: Create user roles
+		// Mapping user roles
+		var roles []*models.UserRole
+		for _, role := range user.Roles {
+			roles = append(roles, &models.UserRole{
+				UserID: userID,
+				RoleID: role,
+			})
+		}
+
+		// Assign roles to the user
+		err = s.userRoleRepo.AssignUserRoles(ctx, roles)
+		if err != nil {
+			return err
+		}
 
 		// Assign user to tenant if tenant id is provided
+		// if provided that indicate that user created by tenant admin
+		// else that indicate that user created by internal platform
 		if tenantID != nil {
 			err = s.userTenantRepo.AssignUserToTenant(ctx, &models.UserTenant{
 				UserID:   userID,
@@ -74,6 +93,9 @@ func (s *userService) CreateUser(ctx context.Context, user *models.CreateUserReq
 		return err
 	})
 	if err != nil {
+		logger.LogError(err)
+
+		// TODO: Handle error
 		return &pkgUtil.Response{}
 	}
 
@@ -94,6 +116,7 @@ func (s *userService) GetAllUsers(ctx context.Context, params *models.FindUsersP
 	// Get all users
 	paginatedResult, err := s.repo.GetAllUsers(ctx, params)
 	if err != nil {
+		// TODO: Handle error
 		return &pkgUtil.Response{}
 	}
 

@@ -19,7 +19,8 @@ type userContainer struct {
 func NewUserContainer(db *database.GormInstance, v validator.Validator) pgkContract.Container {
 	userRepo := repository.NewUserRepository(db)
 	userTenantRepo := repository.NewUserTenantRepository(db)
-	userService := service.NewUserService(userRepo, userTenantRepo, db, v)
+	userRoleRepo := repository.NewUserRoleRepository(db)
+	userService := service.NewUserService(userRepo, userTenantRepo, userRoleRepo, db, v)
 	userHandler := handler.NewUserHandler(userService)
 
 	return &userContainer{

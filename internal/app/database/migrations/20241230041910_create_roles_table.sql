@@ -14,6 +14,11 @@ CREATE TABLE IF NOT EXISTS roles (
     FOREIGN KEY (modified_by) REFERENCES users (id) ON DELETE SET NULL
 );
 
+-- Seed data
+INSERT INTO roles (id, name, description) VALUES
+    ('00000000-0000-0000-0000-000000000001','admin', 'Admin role'),
+    ('00000000-0000-0000-0000-000000000002','user', 'User role');
+
 -- Table to track changes on roles
 CREATE TABLE IF NOT EXISTS archived_roles (
     id UUID PRIMARY KEY NOT NULL,

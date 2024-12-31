@@ -21,7 +21,7 @@ type CreateUserRequest struct {
 	Email        string   `json:"email" validate:"required,email"`
 	Password     string   `gorm:"column:password_hash" json:"password" validate:"required,min=6"`
 	PasswordConf string   `gorm:"-" json:"password_conf" validate:"required,min=6,eqfield=Password"`
-	RoleIDs      []string `gorm:"-" json:"role_ids" validate:"required,min=1"`
+	Roles        []string `gorm:"-" json:"role_ids" validate:"required,min=1"`
 }
 
 func (CreateUserRequest) TableName() string {
