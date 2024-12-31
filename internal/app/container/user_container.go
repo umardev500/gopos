@@ -8,6 +8,7 @@ import (
 	"gitub.com/umardev500/gopos/internal/app/contract"
 	pgkContract "gitub.com/umardev500/gopos/pkg/contract"
 	"gitub.com/umardev500/gopos/pkg/database"
+	"gitub.com/umardev500/gopos/pkg/middleware"
 	"gitub.com/umardev500/gopos/pkg/validator"
 )
 
@@ -27,7 +28,7 @@ func NewUserContainer(db *database.GormInstance, v validator.Validator) pgkContr
 
 func (u *userContainer) HandleApi(router fiber.Router) {
 	users := router.Group("/users")
-	users.Get("/", u.userHandler.GetAllUsers)
+	users.Get("/", middleware.AuthMiddleware(), u.userHandler.GetAllUsers)
 }
 
 func (u *userContainer) HandleWeb(router fiber.Router) {}

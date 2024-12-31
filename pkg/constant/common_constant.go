@@ -7,6 +7,7 @@ type ContextKey int
 const (
 	TransactionContextKey ContextKey = iota
 	ScopeContextKey
+	ClaimsContextKey
 )
 
 var (

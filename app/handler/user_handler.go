@@ -1,9 +1,12 @@
 package handler
 
 import (
+	"context"
+
 	"github.com/gofiber/fiber/v2"
 	"gitub.com/umardev500/gopos/internal/app/contract"
 	"gitub.com/umardev500/gopos/internal/app/models"
+	"gitub.com/umardev500/gopos/pkg/constant"
 	pkgModel "gitub.com/umardev500/gopos/pkg/model"
 	pkgUtil "gitub.com/umardev500/gopos/pkg/util"
 )
@@ -26,6 +29,9 @@ func (u *userHandler) GetAllUsers(c *fiber.Ctx) error {
 
 	ctx, cancel := pkgUtil.BaseContext()
 	defer cancel()
+
+	// Add the claims to the context
+	ctx = context.WithValue(ctx, constant.ClaimsContextKey, c.Locals(constant.ClaimsContextKey))
 
 	params := models.FindUsersParams{
 		Pagination: *paginationParams.Parse(),

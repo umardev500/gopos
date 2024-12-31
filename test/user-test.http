@@ -1,2 +1,16 @@
+### Login
+# @name Login
+POST {{api}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "adminusername",
+    "password": "loremipsum"
+}
+
+### Get token
+@token = {{Login.response.body.data.token}}
+
 ### Get all users
 GET {{api}}/users?page=1&limit=10
+Authorization: Bearer {{token}}
