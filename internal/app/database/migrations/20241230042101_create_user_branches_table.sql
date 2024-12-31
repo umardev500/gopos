@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS user_branches (
     user_id UUID NOT NULL,
     branch_id UUID NOT NULL,
-    version INT NOT NULL,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 
@@ -15,6 +15,10 @@ CREATE TABLE IF NOT EXISTS user_branches (
     FOREIGN KEY (branch_id) REFERENCES branches (id) ON DELETE CASCADE,
     FOREIGN KEY (modified_by) REFERENCES users (id) ON DELETE SET NULL
 );
+
+-- Seed data
+INSERT INTO user_branches (user_id, branch_id) VALUES
+    ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001');
 
 -- Table to track changes on product units
 CREATE TABLE IF NOT EXISTS archived_user_branches (

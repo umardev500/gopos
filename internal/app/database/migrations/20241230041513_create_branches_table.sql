@@ -18,6 +18,10 @@ CREATE TABLE IF NOT EXISTS branches (
     FOREIGN KEY (modified_by) REFERENCES users (id) ON DELETE SET NULL
 );
 
+-- Seed data
+INSERT INTO branches (id, tenant_id, name, email, phone_number) VALUES
+    ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'Main Branch', 'Ql1p2@example.com', '1234567890');
+
 -- Archived branches
 CREATE TABLE IF NOT EXISTS archived_branches (
     id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
