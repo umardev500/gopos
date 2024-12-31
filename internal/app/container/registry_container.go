@@ -9,5 +9,6 @@ import (
 func NewRegistryContainer(db *database.GormInstance, v validator.Validator) []contract.Container {
 	return []contract.Container{
 		NewUserContainer(db, v),
+		NewAuthContainer(db, v),
 	}
 }
