@@ -77,6 +77,17 @@ func (r *userRepository) GetUserById(ctx context.Context, id string) (*models.Us
 	return &user, nil
 }
 
+func (r *userRepository) GetUserByUsernameOrEmail(ctx context.Context, usernameOrEmail string) (*models.User, error) {
+	conn := r.db.GetConn(ctx)
+	var user models.User
+
+	if err := conn.First(&user, "username = ? OR email = ?", usernameOrEmail, usernameOrEmail).Error; err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
 func (r *userRepository) UpdateUserById(ctx context.Context, user models.UpdateUserRequest) error {
 	panic("implement me")
 }

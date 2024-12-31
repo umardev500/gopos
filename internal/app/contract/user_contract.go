@@ -35,6 +35,9 @@ type UserRepository interface {
 	// Get user by id
 	GetUserById(ctx context.Context, id string) (*models.User, error)
 
+	// Get user by username or email
+	GetUserByUsernameOrEmail(ctx context.Context, usernameOrEmail string) (*models.User, error)
+
 	// Update user by id
 	UpdateUserById(ctx context.Context, user models.UpdateUserRequest) error
 }
