@@ -17,13 +17,15 @@ type UserHandler interface {
 }
 
 type UserService interface {
+	CreateUser(ctx context.Context, user *models.CreateUserRequest) *pkgUtil.Response
+
 	// Get all users
 	GetAllUsers(ctx context.Context, params *models.FindUsersParams) *pkgUtil.Response
 }
 
 type UserRepository interface {
 	// Create a new user
-	CreateUser(ctx context.Context, user models.CreateUserRequest) error
+	CreateUser(ctx context.Context, user *models.CreateUserRequest) error
 
 	// Delete user by id
 	DeleteUserById(ctx context.Context, id string) error

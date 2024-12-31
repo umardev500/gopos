@@ -20,7 +20,7 @@ func NewUserRepository(db *database.GormInstance) contract.UserRepository {
 	}
 }
 
-func (r *userRepository) CreateUser(ctx context.Context, user models.CreateUserRequest) error {
+func (r *userRepository) CreateUser(ctx context.Context, user *models.CreateUserRequest) error {
 	conn := r.db.GetConn(ctx)
 	return conn.Create(&user).Error
 }

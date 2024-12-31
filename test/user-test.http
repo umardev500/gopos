@@ -11,6 +11,20 @@ Content-Type: application/json
 ### Get token
 @token = {{Login.response.body.data.token}}
 
+
+### Create user
+POST {{api}}/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "username": "username",
+    "email": "newuser@email.com",
+    "password": "loremipsum",
+    "password_conf": "loremipsum",
+    "role_ids": ["00000000-0000-0000-0000-000000000001"]
+}
+
 ### Get all users
 GET {{api}}/users?page=1&limit=10
 Authorization: Bearer {{token}}

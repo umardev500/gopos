@@ -9,16 +9,48 @@ import (
 	"gitub.com/umardev500/gopos/internal/app/contract"
 	"gitub.com/umardev500/gopos/internal/app/models"
 	"gitub.com/umardev500/gopos/pkg/constant"
+	"gitub.com/umardev500/gopos/pkg/database"
 	pkgUtil "gitub.com/umardev500/gopos/pkg/util"
+	"gitub.com/umardev500/gopos/pkg/validator"
 )
 
 type userService struct {
-	repo contract.UserRepository
+	repo     contract.UserRepository
+	db       *database.GormInstance
+	validate validator.Validator
 }
 
-func NewUserService(repo contract.UserRepository) contract.UserService {
+func NewUserService(repo contract.UserRepository, db *database.GormInstance, v validator.Validator) contract.UserService {
 	return &userService{
-		repo: repo,
+		repo:     repo,
+		db:       db,
+		validate: v,
+	}
+}
+
+func (s *userService) CreateUser(ctx context.Context, user *models.CreateUserRequest) *pkgUtil.Response {
+	// Validate input payload
+	res := s.validate.Struct(user).Response()
+	if res != nil {
+		return res
+	}
+
+	// Start transaction to insert to user and user_roles
+	err := s.db.WithTransaction(ctx, func(ctx context.Context) error {
+		// Create user
+		err := s.repo.CreateUser(ctx, user)
+
+		// TODO: Create user roles
+
+		return err
+	})
+	if err != nil {
+		return &pkgUtil.Response{}
+	}
+
+	return &pkgUtil.Response{
+		Success: true,
+		Message: "User created successfully",
 	}
 }
 
