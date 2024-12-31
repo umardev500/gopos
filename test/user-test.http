@@ -18,12 +18,12 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "username": "username",
-    "email": "newuser@email.com",
+    "username": "usernames",
+    "email": "newusers@email.com",
     "password": "loremipsum",
     "password_conf": "loremipsum",
     "role_ids": [
-        "00000000-0000-0000-0000-000000000001",
+        "00000000-0000-0000-0000-000000000003",
         "00000000-0000-0000-0000-000000000002"
     ]
 }

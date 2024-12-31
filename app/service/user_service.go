@@ -11,7 +11,6 @@ import (
 	"gitub.com/umardev500/gopos/internal/app/models"
 	"gitub.com/umardev500/gopos/pkg/constant"
 	"gitub.com/umardev500/gopos/pkg/database"
-	"gitub.com/umardev500/gopos/pkg/logger"
 	pkgUtil "gitub.com/umardev500/gopos/pkg/util"
 	"gitub.com/umardev500/gopos/pkg/validator"
 )
@@ -93,10 +92,7 @@ func (s *userService) CreateUser(ctx context.Context, user *models.CreateUserReq
 		return err
 	})
 	if err != nil {
-		logger.LogError(err)
-
-		// TODO: Handle error
-		return &pkgUtil.Response{}
+		return pkgUtil.DBErrorResponse(err)
 	}
 
 	return &pkgUtil.Response{

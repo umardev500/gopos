@@ -17,8 +17,8 @@ type User struct {
 
 type CreateUserRequest struct {
 	ID           string   `json:"-"`
-	Username     string   `json:"username" validate:"required,min=6"`
-	Email        string   `json:"email" validate:"required,email"`
+	Username     string   `json:"username" validate:"required,min=6"` // unique
+	Email        string   `json:"email" validate:"required,email"`    // unique
 	Password     string   `gorm:"column:password_hash" json:"password" validate:"required,min=6"`
 	PasswordConf string   `gorm:"-" json:"password_conf" validate:"required,min=6,eqfield=Password"`
 	Roles        []string `gorm:"-" json:"role_ids" validate:"required,min=1"`
