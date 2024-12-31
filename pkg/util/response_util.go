@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/jackc/pgx/v5/pgconn"
 	"gitub.com/umardev500/gopos/pkg/constant"
 	"gitub.com/umardev500/gopos/pkg/logger"
 	"gitub.com/umardev500/gopos/pkg/model"
@@ -38,4 +39,43 @@ func ValidationResponse(err error, fields []model.ValidationErr) *Response {
 		Errors:     fields,
 		Reference:  ref,
 	}
+}
+
+func BadRequestResponse(err error) *Response {
+	ref := logger.LogError(err)
+
+	return &Response{
+		StatusCode: fiber.ErrBadRequest.Code,
+		Message:    fiber.ErrBadRequest.Message,
+		Code:       constant.BadRequestErrorCodeName,
+		Reference:  ref,
+	}
+}
+
+func InternalErrorResponse(err error) *Response {
+	ref := logger.LogError(err)
+
+	return &Response{
+		StatusCode: fiber.ErrInternalServerError.Code,
+		Message:    fiber.ErrInternalServerError.Message,
+		Code:       constant.InternalErrorCodeName,
+		Reference:  ref,
+	}
+}
+
+func DBErrorResponse(err error) *Response {
+	var resp *Response
+
+	switch err := err.(type) {
+	case *pgconn.PgError:
+		resp = parsePgError(err)
+	default:
+		resp = InternalErrorResponse(err)
+	}
+
+	return resp
+}
+
+func parsePgError(err *pgconn.PgError) *Response {
+	return BadRequestResponse(err)
 }
