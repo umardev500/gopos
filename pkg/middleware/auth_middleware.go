@@ -5,6 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"gitub.com/umardev500/gopos/pkg/auth"
+	"gitub.com/umardev500/gopos/pkg/constant"
 )
 
 func AuthMiddleware() fiber.Handler {
@@ -28,7 +29,7 @@ func AuthMiddleware() fiber.Handler {
 		}
 
 		// Add the claims to the context
-		c.Locals("claims", claims)
+		c.Locals(constant.ClaimsContextKey, claims)
 
 		// Pass the request to the next middleware
 		return c.Next()
