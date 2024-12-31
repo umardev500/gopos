@@ -4,7 +4,7 @@ POST {{api}}/auth/login
 Content-Type: application/json
 
 {
-    "username": "adminusername",
+    "username": "superadminusername",
     "password": "loremipsum"
 }
 

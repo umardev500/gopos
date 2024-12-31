@@ -40,13 +40,18 @@ func (r *userRepository) GetAllUsers(ctx context.Context, params *models.FindUse
 	query := conn.Model(&models.User{})
 	var totalCount int64
 
-	// If this query included the tenant id that indicate query tenant scoped
-	// if not that indicate query for the owner
+	// Base query is join with user tenant to get user info
+	query.Joins("LEFT JOIN user_tenants ut ON ut.user_id = users.id")
+
+	// If tenant id is provided, filter by tenant
+	// else filter by tenant id being null indicating internal platform user doing the request
 	if params.TenantID != nil {
-		query.Joins("LEFT JOIN user_tenants ut ON ut.user_id = users.id")
 		query.Where("ut.tenant_id = ?", params.TenantID)
+	} else {
+		query.Where("ut.tenant_id IS NULL")
 	}
 
+	// Count total
 	if err := query.Count(&totalCount).Error; err != nil {
 		return nil, err
 	}
