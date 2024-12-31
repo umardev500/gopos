@@ -12,6 +12,9 @@ const (
 
 var (
 	ValidationErrorCodeName string = "VALIDATION_ERROR"
+	ConflictErrorCodeName   string = "CONFLICT_ERROR"
+	BadRequestErrorCodeName string = "BAD_REQUEST_ERROR"
+	InternalErrorCodeName   string = "INTERNAL_ERROR"
 )
 
 var (
