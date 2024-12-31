@@ -1,5 +1,7 @@
 package constant
 
+import "fmt"
+
 type ContextKey int
 
 const (
@@ -9,4 +11,8 @@ const (
 
 var (
 	ValidationErrorCodeName string = "VALIDATION_ERROR"
+)
+
+var (
+	ErrInvalidToken error = fmt.Errorf("invalid token")
 )
