@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS plans (
     highlights JSONB NOT NULL,
     metadata JSONB NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
     
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS archived_plans (
     highlights JSONB NOT NULL,
     metadata JSONB NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 

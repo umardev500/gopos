@@ -24,7 +24,7 @@ INSERT INTO user_branches (user_id, branch_id) VALUES
 CREATE TABLE IF NOT EXISTS archived_user_branches (
     user_id UUID NOT NULL,
     branch_id UUID NOT NULL,
-    version INT NOT NULL,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 

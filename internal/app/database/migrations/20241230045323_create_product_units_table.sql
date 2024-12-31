@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS product_units (
     unit_id UUID NOT NULL,
     variant_id UUID NULL, -- Optional: Link to specific variant
     base_price DECIMAL(10, 2) NOT NULL, -- Base price for the unit (tenant-wide default)
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS archived_product_units (
     unit_id UUID NOT NULL,
     variant_id UUID NULL, -- Optional: Link to specific variant
     base_price DECIMAL(10, 2) NOT NULL, -- Base price for the unit (tenant-wide default)
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 

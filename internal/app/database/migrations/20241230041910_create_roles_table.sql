@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS roles (
     id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
     name VARCHAR(50) NOT NULL,
     description TEXT,
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS archived_roles (
     id UUID PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
     description TEXT,
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 

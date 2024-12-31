@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS products (
     tenant_id UUID NOT NULL,
     name VARCHAR(50) NOT NULL,
     description TEXT,
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
     
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS archived_products (
     tenant_id UUID NOT NULL,
     name VARCHAR(50) NOT NULL,
     description TEXT,
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
     

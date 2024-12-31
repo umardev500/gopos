@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS units (
     tenant_id UUID NULL, -- Nullable allowing for shared units
     name VARCHAR(50) NOT NULL,
     description TEXT,
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS archived_units (
     tenant_id UUID NULL, -- Nullable allowing for shared units
     name VARCHAR(50) NOT NULL,
     description TEXT,
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 

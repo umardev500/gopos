@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS branch_product_inventory (
     price DECIMAL(10, 2) NOT NULL,
     stock INT NOT NULL DEFAULT 0,
     is_active BOOLEAN NOT NULL DEFAULT TRUE, -- Product/unit availability in branch
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS archived_branch_product_inventory (
     price DECIMAL(10, 2) NOT NULL,
     stock INT NOT NULL DEFAULT 0,
     is_active BOOLEAN NOT NULL DEFAULT TRUE, -- Product/unit availability in branch
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 

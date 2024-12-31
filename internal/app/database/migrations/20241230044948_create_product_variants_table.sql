@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS product_variants (
     product_id UUID NOT NULL,
     name VARCHAR(50) UNIQUE NOT NULL, -- Variant name (e.g., "Small", "Medium", "Large")
     description TEXT,
-    version INT NOT NULL,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
     
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS archived_product_variants (
     product_id UUID NOT NULL,
     name VARCHAR(50) UNIQUE NOT NULL, -- Variant name (e.g., "Small", "Medium", "Large")
     description TEXT,
-    version INT NOT NULL,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
     

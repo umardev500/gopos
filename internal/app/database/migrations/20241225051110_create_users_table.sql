@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(25) UNIQUE NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
     password_hash VARCHAR(60) NOT NULL,
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS archived_users (
     username VARCHAR(25) UNIQUE NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
     password_hash VARCHAR(60) NOT NULL,
-    version INT NOT NULL DEFAULT 1,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
 

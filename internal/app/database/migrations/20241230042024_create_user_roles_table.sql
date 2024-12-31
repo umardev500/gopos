@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS user_roles (
     user_id UUID NOT NULL,
     role_id UUID NOT NULL,
-    version INT NOT NULL,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
     
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS user_roles (
 CREATE TABLE IF NOT EXISTS archived_user_roles (
     user_id UUID NOT NULL,
     role_id UUID NOT NULL,
-    version INT NOT NULL,
+    version INT NULL,
 
     modified_by UUID NULL, -- User who made the change
     
