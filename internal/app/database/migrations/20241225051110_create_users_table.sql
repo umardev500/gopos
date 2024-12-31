@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Seed data
 INSERT INTO users (id, username, email, password_hash) VALUES
-    ('00000000-0000-0000-0000-000000000001', 'adminusername', 'admin@email.com', '$2a$10$AMLoK2T8XDVO2XAX0maDJeFpPwQfCTkzdRNceW9pp.f2saSIYP9Me');
+    ('00000000-0000-0000-0000-000000000001', 'adminusername', 'admin@email.com', '$2a$10$AMLoK2T8XDVO2XAX0maDJeFpPwQfCTkzdRNceW9pp.f2saSIYP9Me'),
+    ('00000000-0000-0000-0000-000000000002', 'superadminusername', 'superadmin@email.com', '$2a$10$AMLoK2T8XDVO2XAX0maDJeFpPwQfCTkzdRNceW9pp.f2saSIYP9Me');
 
 -- Table to track changes on users
 CREATE TABLE IF NOT EXISTS archived_users (
