@@ -58,16 +58,18 @@ func (s *userService) CreateUser(ctx context.Context, user *models.CreateUserReq
 
 	// Start transaction to insert to user and user_roles
 	err := s.db.WithTransaction(ctx, func(ctx context.Context) error {
+		var err error
+
 		// Create user
-		err := s.repo.CreateUser(ctx, user)
+		err = s.repo.CreateUser(ctx, user)
 		if err != nil {
 			return err
 		}
 
 		// Mapping user roles
-		var roles []*models.UserRole
+		var roles []*models.UserRoleParam
 		for _, role := range user.Roles {
-			roles = append(roles, &models.UserRole{
+			roles = append(roles, &models.UserRoleParam{
 				UserID: userID,
 				RoleID: role,
 			})

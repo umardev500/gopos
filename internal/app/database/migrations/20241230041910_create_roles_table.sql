@@ -1,7 +1,7 @@
 -- +goose Up
 CREATE TABLE IF NOT EXISTS roles (
     id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
-    tenant_id UUID NULL,
+    tenant_id UUID NULL, -- Nullable for platform roles
     name VARCHAR(50) NOT NULL,
     description TEXT,
     version INT NULL,

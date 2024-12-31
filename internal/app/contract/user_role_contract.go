@@ -7,5 +7,5 @@ import (
 )
 
 type UserRoleRepository interface {
-	AssignUserRoles(ctx context.Context, userRoles []*models.UserRole) error
+	AssignUserRoles(ctx context.Context, userRoles []*models.UserRoleParam) error
 }
