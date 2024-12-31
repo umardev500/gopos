@@ -4,7 +4,7 @@ POST {{api}}/auth/login
 Content-Type: application/json
 
 {
-    "username": "adminusername",
+    "username": "superadminusername",
     "password": "loremipsum"
 }
 
@@ -23,8 +23,7 @@ Authorization: Bearer {{token}}
     "password": "loremipsum",
     "password_conf": "loremipsum",
     "role_ids": [
-        "00000000-0000-0000-0000-000000000001",
-        "00000000-0000-0000-0000-000000000002"
+        "00000000-0000-0000-0000-000000000001"
     ]
 }
 

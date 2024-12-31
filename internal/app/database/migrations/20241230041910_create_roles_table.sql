@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS roles (
 -- Seed data
 INSERT INTO roles (id, tenant_id, name, description) VALUES
     ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'admin', 'Admin role'),
-    ('00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000001', 'user', 'User role');
+    ('00000000-0000-0000-0000-000000000002', null, 'user', 'User role');
 
 -- Table to track changes on roles
 CREATE TABLE IF NOT EXISTS archived_roles (

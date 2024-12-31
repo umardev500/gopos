@@ -18,6 +18,7 @@ import (
 type userService struct {
 	repo           contract.UserRepository
 	userTenantRepo contract.UserTenantRepository
+	roleRepo       contract.RoleRepository
 	userRoleRepo   contract.UserRoleRepository
 	db             *database.GormInstance
 	validate       validator.Validator
@@ -26,6 +27,7 @@ type userService struct {
 func NewUserService(
 	repo contract.UserRepository,
 	userTenantRepo contract.UserTenantRepository,
+	roleRepo contract.RoleRepository,
 	userRoleRepo contract.UserRoleRepository,
 	db *database.GormInstance,
 	v validator.Validator,
@@ -33,6 +35,7 @@ func NewUserService(
 	return &userService{
 		repo:           repo,
 		userTenantRepo: userTenantRepo,
+		roleRepo:       roleRepo,
 		userRoleRepo:   userRoleRepo,
 		db:             db,
 		validate:       v,
@@ -56,8 +59,21 @@ func (s *userService) CreateUser(ctx context.Context, user *models.CreateUserReq
 		tenantID = &tid
 	}
 
+	// count given roles
+	roleCount, err := s.roleRepo.CountRolesByTenantID(ctx, user.Roles, tenantID)
+	if err != nil {
+		return pkgUtil.DBErrorResponse(err)
+	}
+
+	// compare it does the roles give is valid with related tenant id
+	// if tenant id is not nil
+	// if nil that indicate platform query
+	if roleCount != int64(len(user.Roles)) {
+		return pkgUtil.BadRequestResponse(constant.ErrRoleCountNotValid)
+	}
+
 	// Start transaction to insert to user and user_roles
-	err := s.db.WithTransaction(ctx, func(ctx context.Context) error {
+	err = s.db.WithTransaction(ctx, func(ctx context.Context) error {
 		var err error
 
 		// Create user

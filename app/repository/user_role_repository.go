@@ -18,6 +18,6 @@ func NewUserRoleRepository(db *database.GormInstance) contract.UserRoleRepositor
 	}
 }
 
-func (r *userRoleRepository) AssignUserRoles(ctx context.Context, userRoles []*models.UserRoleParam) error {
-	return r.db.GetConn(ctx).Create(userRoles).Error
+func (u *userRoleRepository) AssignUserRoles(ctx context.Context, userRoles []*models.UserRoleParam) error {
+	return u.db.GetConn(ctx).Create(userRoles).Error
 }
