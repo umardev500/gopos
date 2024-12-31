@@ -10,6 +10,8 @@ import (
 )
 
 type UserHandler interface {
+	CreateUser(c *fiber.Ctx) error
+
 	// Get all users
 	GetAllUsers(c *fiber.Ctx) error
 }

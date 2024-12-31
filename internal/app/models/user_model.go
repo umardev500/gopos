@@ -15,7 +15,13 @@ type User struct {
 	pkgModel.Time
 }
 
-type CreateUserRequest struct{}
+type CreateUserRequest struct {
+	ID           string `json:"-"`
+	Username     string `json:"username" validate:"required,min=6"`
+	Email        string `json:"email" validate:"required,email"`
+	Password     string `json:"password" validate:"required,min=6"`
+	PasswordConf string `json:"password_conf" validate:"required,min=6,eqfield=Password"`
+}
 
 type UpdateUserRequest struct {
 	ID string `json:"-"`

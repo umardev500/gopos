@@ -21,23 +21,30 @@ func NewUserHandler(userService contract.UserService) contract.UserHandler {
 	}
 }
 
+func (u *userHandler) CreateUser(c *fiber.Ctx) error {
+	ctx := pkgUtil.NewContext().WithTimeout(5).WithClaims(c)
+	defer ctx.Cancel()
+
+	return nil
+}
+
 func (u *userHandler) GetAllUsers(c *fiber.Ctx) error {
 	var paginationParams = &pkgModel.PaginationParams{
 		Page:  c.QueryInt("page"),
 		Limit: c.QueryInt("limit"),
 	}
 
-	ctx, cancel := pkgUtil.BaseContext()
-	defer cancel()
+	ctx := pkgUtil.NewContext().WithTimeout(5).WithClaims(c)
+	defer ctx.Cancel()
 
 	// Add the claims to the context
-	ctx = context.WithValue(ctx, constant.ClaimsContextKey, c.Locals(constant.ClaimsContextKey))
+	ctx.Ctx = context.WithValue(ctx.Ctx, constant.ClaimsContextKey, c.Locals(constant.ClaimsContextKey))
 
 	params := models.FindUsersParams{
 		Pagination: *paginationParams.Parse(),
 	}
 
-	res := u.userService.GetAllUsers(ctx, &params)
+	res := u.userService.GetAllUsers(ctx.Ctx, &params)
 	if res == nil {
 		return c.JSON(res)
 	}

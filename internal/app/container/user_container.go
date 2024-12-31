@@ -29,6 +29,7 @@ func NewUserContainer(db *database.GormInstance, v validator.Validator) pgkContr
 func (u *userContainer) HandleApi(router fiber.Router) {
 	users := router.Group("/users")
 	users.Get("/", middleware.AuthMiddleware(), u.userHandler.GetAllUsers)
+	users.Post("/", middleware.AuthMiddleware(), u.userHandler.CreateUser)
 }
 
 func (u *userContainer) HandleWeb(router fiber.Router) {}

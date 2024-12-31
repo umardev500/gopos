@@ -23,10 +23,10 @@ func (h *authHandler) Login(c *fiber.Ctx) error {
 		return err
 	}
 
-	ctx, cancel := pkgUtil.BaseContext()
-	defer cancel()
+	ctx := pkgUtil.NewContext().WithTimeout(5)
+	defer ctx.Cancel()
 
-	res := h.authService.Login(ctx, &payload)
+	res := h.authService.Login(ctx.Ctx, &payload)
 
 	return c.Status(res.StatusCode).JSON(res)
 }
