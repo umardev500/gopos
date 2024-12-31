@@ -20,7 +20,8 @@ func NewAuthHandler(authService contract.AuthService) contract.AuthHandler {
 func (h *authHandler) Login(c *fiber.Ctx) error {
 	var payload models.LoginRequest
 	if err := c.BodyParser(&payload); err != nil {
-		return err
+		res := pkgUtil.BadRequestResponse(err)
+		c.Status(res.StatusCode).JSON(res)
 	}
 
 	ctx := pkgUtil.NewContext().WithTimeout(5)
