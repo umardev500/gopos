@@ -70,7 +70,7 @@ func (v *validator) Struct(s interface{}) Validator {
 
 	for _, fe := range err.(goValidator.ValidationErrors) {
 		fn := fe.StructField()
-		f, ok := value.Type().FieldByName(fn)
+		f, ok := value.Elem().Type().FieldByName(fn)
 		if !ok {
 			log.Fatal().Err(fmt.Errorf("field %s not found", fn)).Msg("Field not found")
 		}
