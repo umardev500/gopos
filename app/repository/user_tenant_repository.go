@@ -18,7 +18,7 @@ func NewUserTenantRepository(db *database.GormInstance) contract.UserTenantRepos
 	}
 }
 
-func (r *userTenantRepository) AssignUserToTenant(ctx context.Context, userTenant *models.CreateUserTenantRequest) error {
+func (r *userTenantRepository) AssignUserToTenant(ctx context.Context, userTenant *models.UserTenant) error {
 	conn := r.db.GetConn(ctx)
 
 	return conn.Create(&userTenant).Error

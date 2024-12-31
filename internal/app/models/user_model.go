@@ -16,7 +16,7 @@ type User struct {
 }
 
 type CreateUserRequest struct {
-	ID           string   `gorm:"-" json:"-"`
+	ID           string   `json:"-"`
 	Username     string   `json:"username" validate:"required,min=6"`
 	Email        string   `json:"email" validate:"required,email"`
 	Password     string   `gorm:"column:password_hash" json:"password" validate:"required,min=6"`

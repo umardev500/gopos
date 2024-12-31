@@ -6,6 +6,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 	"gitub.com/umardev500/gopos/internal/app/contract"
 	"gitub.com/umardev500/gopos/internal/app/models"
 	"gitub.com/umardev500/gopos/pkg/constant"
@@ -15,16 +16,23 @@ import (
 )
 
 type userService struct {
-	repo     contract.UserRepository
-	db       *database.GormInstance
-	validate validator.Validator
+	repo           contract.UserRepository
+	userTenantRepo contract.UserTenantRepository
+	db             *database.GormInstance
+	validate       validator.Validator
 }
 
-func NewUserService(repo contract.UserRepository, db *database.GormInstance, v validator.Validator) contract.UserService {
+func NewUserService(
+	repo contract.UserRepository,
+	userTenantRepo contract.UserTenantRepository,
+	db *database.GormInstance,
+	v validator.Validator,
+) contract.UserService {
 	return &userService{
-		repo:     repo,
-		db:       db,
-		validate: v,
+		repo:           repo,
+		userTenantRepo: userTenantRepo,
+		db:             db,
+		validate:       v,
 	}
 }
 
@@ -35,12 +43,33 @@ func (s *userService) CreateUser(ctx context.Context, user *models.CreateUserReq
 		return res
 	}
 
+	userID := uuid.New().String()
+	user.ID = userID
+	var tenantID *string
+
+	// Assign tenant id from context
+	claims := ctx.Value(constant.ClaimsContextKey).(jwt.MapClaims)
+	if tid, ok := claims["tid"].(string); ok {
+		tenantID = &tid
+	}
+
 	// Start transaction to insert to user and user_roles
 	err := s.db.WithTransaction(ctx, func(ctx context.Context) error {
 		// Create user
 		err := s.repo.CreateUser(ctx, user)
+		if err != nil {
+			return err
+		}
 
 		// TODO: Create user roles
+
+		// Assign user to tenant if tenant id is provided
+		if tenantID != nil {
+			err = s.userTenantRepo.AssignUserToTenant(ctx, &models.UserTenant{
+				UserID:   userID,
+				TenantID: *tenantID,
+			})
+		}
 
 		return err
 	})

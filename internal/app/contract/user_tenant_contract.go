@@ -8,5 +8,5 @@ import (
 
 type UserTenantRepository interface {
 	// Assing user to tenant
-	AssignUserToTenant(ctx context.Context, userTenant *models.CreateUserTenantRequest) error
+	AssignUserToTenant(ctx context.Context, userTenant *models.UserTenant) error
 }

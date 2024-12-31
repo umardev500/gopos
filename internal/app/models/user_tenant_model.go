@@ -7,6 +7,11 @@ type CreateUserTenantRequest struct {
 	TenantID uuid.UUID `json:"tenant_id" validate:"required"`
 }
 
-func (CreateUserTenantRequest) TableName() string {
+type UserTenant struct {
+	UserID   string
+	TenantID string
+}
+
+func (UserTenant) TableName() string {
 	return "user_tenants"
 }

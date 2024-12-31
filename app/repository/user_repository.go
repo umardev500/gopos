@@ -22,7 +22,9 @@ func NewUserRepository(db *database.GormInstance) contract.UserRepository {
 
 func (r *userRepository) CreateUser(ctx context.Context, user *models.CreateUserRequest) error {
 	conn := r.db.GetConn(ctx)
-	return conn.Create(&user).Error
+	result := conn.Create(&user).Error
+
+	return result
 }
 
 func (r *userRepository) DeleteUserById(ctx context.Context, id string) error {
