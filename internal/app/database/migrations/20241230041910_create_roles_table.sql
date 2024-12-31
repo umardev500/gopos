@@ -1,6 +1,7 @@
 -- +goose Up
 CREATE TABLE IF NOT EXISTS roles (
     id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
+    tenant_id UUID NULL,
     name VARCHAR(50) NOT NULL,
     description TEXT,
     version INT NULL,
@@ -11,6 +12,7 @@ CREATE TABLE IF NOT EXISTS roles (
     updated_at TIMESTAMPTZ NULL DEFAULT NULL,
     deleted_at TIMESTAMPTZ NULL DEFAULT NULL,
 
+    FOREIGN KEY (tenant_id) REFERENCES tenants (id) ON DELETE CASCADE,
     FOREIGN KEY (modified_by) REFERENCES users (id) ON DELETE SET NULL
 );
 
@@ -22,6 +24,7 @@ INSERT INTO roles (id, name, description) VALUES
 -- Table to track changes on roles
 CREATE TABLE IF NOT EXISTS archived_roles (
     id UUID PRIMARY KEY NOT NULL,
+    tenant_id UUID NULL,
     name VARCHAR(50) NOT NULL,
     description TEXT,
     version INT NULL,
@@ -34,6 +37,7 @@ CREATE TABLE IF NOT EXISTS archived_roles (
     deleted_at TIMESTAMPTZ NULL DEFAULT NULL,
 
     FOREIGN KEY (id) REFERENCES roles (id) ON DELETE CASCADE,
+    FOREIGN KEY (tenant_id) REFERENCES tenants (id) ON DELETE CASCADE,
     FOREIGN KEY (modified_by) REFERENCES users (id) ON DELETE SET NULL
 );
 
