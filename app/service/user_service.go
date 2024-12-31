@@ -49,8 +49,15 @@ func (s *userService) CreateUser(ctx context.Context, user *models.CreateUserReq
 		return res
 	}
 
+	passwd, err := pkgUtil.HashPassword(user.Password)
+	if err != nil {
+		return pkgUtil.InternalErrorResponse(err)
+	}
+
 	userID := uuid.New().String()
 	user.ID = userID
+	user.Password = passwd
+
 	var tenantID *string
 
 	// Assign tenant id from context
